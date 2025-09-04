@@ -17,7 +17,7 @@ for hospede in range(1,6):
         ba.append(estado)
     elif estado.upper() == 'PE':
         pe.append(estado)
-    elif estado.upper == 'SP':
+    elif estado.upper() == 'SP':
         sp.append(estado)
 
 total_al = len(al)
