@@ -8,7 +8,12 @@ def menu_principal():
           \n0 - Sair")
     
 def menu_cliente():
-    pass
+    print("\n========== MENU CLIENTE ==========")
+    print("1 - Cadastrar cliente\
+          \n2 - Buscar Cliente\
+          \n3 - Listar Clientes\
+          \n4 - Atualizar Cliente\
+          \n0 - Sair")
 
 def menu_produto():
     print("\n========== MENU PRODUTO =========")
@@ -31,7 +36,26 @@ def main():
         op = int(input("Digite a opção: "))
 
         if op == 1:
-            menu_cliente()
+            while True:
+                menu_cliente()
+                op1 = int(input("Digite uma opção: "))
+
+                if op1 == 1:
+                    cadastrar_cliente()
+                elif op1 == 2:
+                    cod = input("Informe o codigo do cliente: ")
+                    buscar_cliente(cod)
+                elif op1 == 3:
+                    listar_clientes()
+                elif op1 == 4:
+                    cod = input("Informe o codigo do cliente que deseja atualizar:")
+                    atualizar_cliente(cod)
+                elif op1 == 0:
+                    print("Saindo do Menu de clientes")
+                    break
+                else:
+                    print("ERRO: DIGITE UM NUMERO DE 0 A 4")
+
         elif op == 2:
             while True:
                 menu_produto()
@@ -40,7 +64,7 @@ def main():
                 if op2 == 1:
                     cadastrar_produto()
                 elif op2 == 2:
-                    cod = (input("Informe o codigo do produto: "))
+                    cod = input("Informe o codigo do produto: ")
                     buscar_produto(cod)
                 elif op2 == 3:
                     listar_produtos()
@@ -55,7 +79,7 @@ def main():
         elif op == 3:
             while True:
                 menu_venda()
-                op3 = int(input("Digite a opção: "))
+                op3 = int(input("Digite uma opção: "))
 
                 if op3 == 1:
                     cod = input("Informe o codigo do produto: ")
@@ -74,6 +98,6 @@ def main():
             print("Encerrando o programa....")
             break
         else:
-            print("ERRO INALCANÇAVEL")
+            print("ERRO: DIGITE 0 PARA SAIR")
 
 main()

@@ -1,5 +1,7 @@
 ''' PRODUTO: codigo, nome, e qtd '''
+
 produtos = []
+
 def cadastrar_produto():
     print("\n======== CADASTRAR PRODUTOS =========")
     cod = "00" + str(gerar_codigo())
@@ -36,6 +38,7 @@ def controlar_estoque():
     pass
 
 '''VENDAS'''
+
 vendas = []
 
 def registrar_venda(cod):
@@ -77,3 +80,40 @@ def buscar_vendas(cod):
     
     print("Codigo de venda não encontrado")
     return False
+
+'''CLIENTES'''
+
+clientes = []
+
+def cadastrar_cliente():
+    print("\n========= CADASTRO DE CLIENTE ==========")
+    cod = "00" + str(gerar_codigo())
+    nome = input("Digite o Nome do Cliente: ")
+    cpf = input("Digite o CPF do Cliente: ")
+    cliente = [cod, nome, cpf]
+    clientes.append(cliente)
+    print(f"\nCliente:{cliente[1]} cadastrado com sucesso, Codigo:{cliente[0]}")
+
+def buscar_cliente(cod):
+    for cliente in clientes:
+        if cliente[0] == cod:
+            print("\nCliente Cadastrado:")
+            print(f"Nome:{cliente[1]} - CPF:{cliente[2]}")
+            return True
+    
+    print("Cliente não encontrado na base de dados")
+    return False
+
+def listar_clientes():
+    for cliente in clientes:
+        print(f"Codigo:{cliente[0]} - Nome:{cliente[1]} - CPF:{cliente[2]}")
+
+def atualizar_cliente(cod):
+    if buscar_cliente(cod):
+        for cliente in clientes:
+            if cliente[0] == cod:
+                nome =input("Digite o novo nome do cliente: ")
+                cliente[1] = nome
+                print(f"Nome atualizado com sucesso:{nome}")
+            else:
+                print("ERRO")
