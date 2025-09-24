@@ -4,12 +4,13 @@ produtos = []
 
 def cadastrar_produto():
     print("\n======== CADASTRAR PRODUTOS =========")
-    cod = "00" + str(gerar_codigo())
+    cod = "P0" + str(gerar_codigo())
     nome = input("Digite o nome do produto: ")
     qtd = int(input("Digite a quantidade em estoque: "))
     produto = [cod, nome, qtd]
     produtos.append(produto)
-    print(f"Produto: {nome} cadastrado com sucesso")
+    print("\nCADASTRADO COM SUCESSO")
+    print(f"\nCodigo:{cod} - Produto: {nome} - Quantidade:{qtd}")
 
 def gerar_codigo():
     if len(produtos) == 0:
@@ -22,7 +23,7 @@ def buscar_produto(cod):
     print("\n========== BUSCAR PRODUTO ==========")
     for produto in produtos:
         if produto[0] == cod:
-            print(f"Produto devidamente cadastrado\nCodigo:{produto[0]} - Produto:{produto[1]} ")
+            print(f"\nProduto devidamente cadastrado\n\nCodigo:{produto[0]} - Produto:{produto[1]} ")
             return True
     
     print("Produto não encotrado cadastre-o")
@@ -32,10 +33,32 @@ def buscar_produto(cod):
 def listar_produtos():
     print("\n======== LISTANDO PRODUTOS ==========")
     for produto in produtos:
-        print(f"Codigo: {produto[0]} - Nome: {produto[1]} - Estoque: {produto[2]}")
+        print(f"\nCodigo: {produto[0]} - Nome: {produto[1]} - Estoque: {produto[2]}")
 
 def controlar_estoque():
-    pass
+    cod = input("informe o codgio: ")
+    if buscar_produto(cod):
+        for produto in produtos:
+            if produto[0] == cod:
+                print("Deseja adicionar ou remover?")
+                op = int(input("\n1 - Adicionar\n2 - Remover\n0 - Cancelar\nOpção: "))
+                if op == 1:
+                    qtd = int(input("Digite a quantidade que deseja adicionar: "))
+                    produto[2] += qtd
+                elif op == 2:
+                    qtd = int(input("Digite a quantidade que deseja remover: "))
+                    if qtd > produto[2]:
+                        print("\nERRO: quantidade maior que estoque")
+                        return
+                    else:
+                        produto[2] -= qtd
+                elif op == 0:
+                    print("Opção cancelada")
+                    return
+                else: 
+                    print("Opção invalida")
+                    continue
+            print("Estoque alterado")
 
 '''VENDAS'''
 
@@ -92,7 +115,8 @@ def cadastrar_cliente():
     cpf = input("Digite o CPF do Cliente: ")
     cliente = [cod, nome, cpf]
     clientes.append(cliente)
-    print(f"\nCliente:{cliente[1]} cadastrado com sucesso, Codigo:{cliente[0]}")
+    print("\nCLIENTE CADASTRADO COM SUCESSO")
+    print(f"\nCodigo:{cliente[0]} - Cliente:{cliente[1]}")
 
 def buscar_cliente(cod):
     for cliente in clientes:
@@ -112,8 +136,17 @@ def atualizar_cliente(cod):
     if buscar_cliente(cod):
         for cliente in clientes:
             if cliente[0] == cod:
-                nome =input("Digite o novo nome do cliente: ")
+                nome =input("\nDigite o novo nome do cliente: ")
                 cliente[1] = nome
-                print(f"Nome atualizado com sucesso:{nome}")
+                print(f"Atualizado com sucesso:{nome}")
+            else:
+                print("ERRO")
+
+def remover_cliente(cod):
+    if buscar_cliente(cod):
+        for cliente in clientes:
+            if cliente[0] == cod:
+                clientes.remove(cliente)
+                print(f"\nRemovido com sucesso:\nCodigo:{cliente[0]} - Nome:{cliente[1]} - CPF:{cliente[2]}")
             else:
                 print("ERRO")

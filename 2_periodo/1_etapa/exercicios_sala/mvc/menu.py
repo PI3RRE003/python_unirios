@@ -6,6 +6,7 @@ def menu_principal():
           \n2 - Produto\
           \n3 - Venda\
           \n0 - Sair")
+    print("===================================")
     
 def menu_cliente():
     print("\n========== MENU CLIENTE ==========")
@@ -13,7 +14,9 @@ def menu_cliente():
           \n2 - Buscar Cliente\
           \n3 - Listar Clientes\
           \n4 - Atualizar Cliente\
+          \n5 - Remover Cliente\
           \n0 - Sair")
+    print("===================================")
 
 def menu_produto():
     print("\n========== MENU PRODUTO =========")
@@ -22,6 +25,7 @@ def menu_produto():
           \n3 - Listar Produtos\
           \n4 - Controlar Estoque\
           \n0 - Sair")
+    print("===================================")
     
 def menu_venda():
     print("\n========== MENU VENDA =========")
@@ -29,6 +33,7 @@ def menu_venda():
           \n2 - Buscar Vendas\
           \n3 - Listar Vendas\
           \n0 - Sair")
+    print("===================================")
 
 def main():
     while True:
@@ -50,6 +55,9 @@ def main():
                 elif op1 == 4:
                     cod = input("Informe o codigo do cliente que deseja atualizar:")
                     atualizar_cliente(cod)
+                elif op1 == 5:
+                    cod = input("Informe o codigo do cliente que deseja atualizar:")
+                    remover_cliente(cod)
                 elif op1 == 0:
                     print("Saindo do Menu de clientes")
                     break
