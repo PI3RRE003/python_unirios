@@ -95,3 +95,7 @@ def alterar_dados_da_empresa(cnpj):
                 print(f"\nEmpresa:{empresa[0]} - CNPJ:{empresa[1]} - Mercado de atuação:{empresa[2]} - Numero de funcionarios:{empresa[3]}")
 
 
+def deletar_empresa(cnpj):
+    for empresa in empresas:
+        if empresa[1] == cnpj:
+            empresas.remove(empresa)
