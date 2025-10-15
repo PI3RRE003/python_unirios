@@ -2,7 +2,7 @@ from models.model_1 import *
 
 def menu():
     while True:
-        print("\n========= BANCO MIND ========")
+        print("\n========= BANCO MI ========")
         print("1 - Criar Nova Conta"
               "\n2 - Listar todas as contas"
               "\n3 - Realizar deposito"
