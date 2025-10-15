@@ -32,12 +32,21 @@ def menu():
               "\n2 - Registrar Venda"
               "\n0 - Sair")
 
-        op = int(input("Digite a opção: "))
+        try:
+            op = int(input("Digite a opção: "))
+        except ValueError:
+            print("\nError: Digite apenas numeros")
+            continue
 
         if op == 1:
             while True:
                 gerenciar_produtos()
-                op1 = int(input("Digite a opção: "))
+
+                try:
+                    op1 = int(input("Digite a opção: "))
+                except ValueError:
+                    print("\nError: Digite apenas numeros")
+                    continue
 
                 if op1 == 1:
                     cadastrar_produto()
@@ -59,7 +68,11 @@ def menu():
             while True:
                 registrar_vendas()
 
-                op2 = int(input("Digite a opção:"))
+                try:
+                    op2 = int(input("Digite a opção:"))
+                except ValueError:
+                    print("\nError: Digite apenas numeros")
+                    continue
 
                 if op2 == 1:
                     codigo = input("Digite o codigo do produto que deseja realizar a venda: ")
@@ -67,8 +80,14 @@ def menu():
                 elif op2 == 2:
                     listar_vendas()
                 elif op2 == 3:
-                    codigo = input("Digite o codigo do produto que deseja realizar a venda: ")
-                    alterar_venda(codigo)
+                    codigo = input("Digite o codigo do produto que deseja buscar a venda: ")
+                    buscar_venda_pelo_codigo(codigo)
+                elif op2 == 4:
+                    codigo = input("Digite o codigo do produto que deseja alterar: ")
+                    alterar_venda_pelo_codigo(codigo)
+                elif op2 == 5:
+                    codigo = input("Digite o codigo do produto que deseja realizar a remoção: ")
+                    remover_venda(codigo)
                 elif op2 == 0:
                     print("\nRetornando ao menu principal...")
                     break

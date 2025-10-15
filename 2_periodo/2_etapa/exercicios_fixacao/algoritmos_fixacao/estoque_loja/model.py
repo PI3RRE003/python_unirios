@@ -5,14 +5,13 @@ PRODUTOS = 'produtos.json'
 
 def salvar_dados_produtos(produtos):
     with open(PRODUTOS, 'w', encoding='utf-8') as arquivo:
-        json.dump(produtos, arquivo, indent=4)
+        json.dump(produtos, arquivo, ensure_ascii=False ,indent=4)
 
 def carregar_dados_produtos():
     try:
         with open(PRODUTOS, 'r', encoding='utf-8') as arquivo:
             return json.load(arquivo)
     except FileNotFoundError:
-        print("\nArquivo não encontrado no sistema, iniciando uma lista vazia")
         return []
 
 vendas = []
@@ -20,14 +19,13 @@ VENDAS = 'vendas.json'
 
 def salvar_dados_vendas(vendas):
     with open(VENDAS, 'w', encoding='utf-8') as arquivo:
-        json.dump(vendas, arquivo, indent=4)
+        json.dump(vendas, arquivo, ensure_ascii=False ,indent=4)
 
 def carregar_dados_vendas():
     try:
         with open(VENDAS, 'r', encoding='utf-8') as arquivo:
             return  json.load(arquivo)
     except FileNotFoundError:
-        print("\nArquivo não encontrado no sistema, iniciando uma lista vazia")
         return []
 
 
@@ -43,6 +41,7 @@ def cadastrar_produto():
         qtd_estoque = float(input("Digite a quantidade em estoque do produto: "))
     except ValueError:
         print("Error: Digite apenas numeros")
+        return
 
     produto = {
         'codigo' : codigo,
@@ -66,6 +65,7 @@ def gerar_codigo():
     return codigo
 
 def listar_produtos():
+
     produtos = carregar_dados_produtos()
     print(f"\n{'=' * 10} LISTANDO PRODUTOS {'=' * 10}")
     for produto in produtos:
@@ -143,14 +143,16 @@ def registrar_venda(codigo):
                 print("Error: Não pode vender quantidade maior que a do estoque")
                 return
             else:
+                carregar_dados_vendas()
                 codigo_da_venda = "00" + str(codigo_venda())
-                qtd_venda -= produto['estoque']
-                qtd_venda *= produto['preco']
+                preco = produto['preco']
+                qtd_vendida = qtd_venda
+                valor_total = preco * qtd_venda
                 venda ={
                     'codigo' : codigo_da_venda,
                     'nome' : produto['nome'],
-                    'preco' : qtd_venda,
-                    'quantidade' : qtd_venda
+                    'preco' : valor_total,
+                    'quantidade' : qtd_vendida
                 }
                 vendas = carregar_dados_vendas()
                 vendas.append(venda)
@@ -160,6 +162,7 @@ def registrar_venda(codigo):
 
 
 def codigo_venda():
+    vendas = carregar_dados_vendas()
     if not vendas:
         codigo = 1
     else:
@@ -167,11 +170,49 @@ def codigo_venda():
     return  codigo
 
 def listar_vendas():
+    print(f"\n{'=' * 10} LISTANDO VENDAS {'=' * 10}")
     vendas_carregadas = carregar_dados_vendas()
     for venda in vendas_carregadas:
         print(f"\n{venda['codigo']} -  Nome:{venda['nome']} - Preço total:{venda['preco']} - Quantidade vendida:{venda['quantidade']}")
 
-def alterar_venda(codigo):
-    vendas = listar_vendas()
-    if codigo == vendas['codigo']:
-        print("PASSOU")
+def buscar_venda_pelo_codigo(codigo):
+    print(f"\n{'=' * 10} BUSCANDO VENDAS PELO CODIGO {'=' * 10}")
+    vendas = carregar_dados_vendas()
+    for venda in vendas:
+        if venda['codigo'] == codigo:
+            print(f"\n{venda['codigo']} -  Nome:{venda['nome']} - Preço total:{venda['preco']} - Quantidade vendida:{venda['quantidade']}")
+
+def alterar_venda_pelo_codigo(codigo):
+    print(f"\n{'=' * 10} ALTERANDO VENDA PELO CODIGO {'=' * 10}")
+    vendas = carregar_dados_vendas()
+    for venda in vendas:
+        if venda['codigo'] == codigo:
+            print(f"\nPRODUTO ENCONTRADO!\n{venda['codigo']} -  Nome:{venda['nome']} - Preço total:{venda['preco']} - Quantidade vendida:{venda['quantidade']}\n")
+
+            op = int(input("O que deseja alterar?\n1 - Preço\n2 - Quantidade\n0 - Sair\nDigite a opção:"))
+
+            if op == 1:
+                print("\nVocê escolheu a opção de alterar preço")
+                novo_preco = float(input("Digite o novo preço: "))
+                venda['preco'] = novo_preco * venda['quantidade']
+                print(f"\nCodigo:{venda['codigo']} -  Nome:{venda['nome']} - Preço total:{venda['preco']} - Quantidade vendida:{venda['quantidade']}\n")
+                salvar_dados_vendas(vendas)
+            elif op == 2:
+                print("\nVocê escolheu a opção de alterar estoque")
+                nova_qtd = int(input("Digite a nova quantidade: "))
+                venda['quantidade'] = nova_qtd
+                preco_total = venda['preco'] * nova_qtd
+                venda['preco'] = preco_total
+                print(f"\nCodigo:{venda['codigo']} -  Nome:{venda['nome']} - Preço total:{venda['preco']} - Quantidade vendida:{venda['quantidade']}\n")
+                salvar_dados_vendas(vendas)
+            elif op == 0:
+                print("\nRetornando ao menu principal...")
+                return
+
+def remover_venda(codigo):
+    vendas = carregar_dados_vendas()
+    for venda in vendas:
+        if venda['codigo'] == codigo:
+            vendas.remove(venda)
+            salvar_dados_vendas(vendas)
+            print(f"\nPRODUTO REMOVIDO COM SUCESSO !!!\nCodigo:{venda['codigo']} -  Nome:{venda['nome']} - Preço total:{venda['preco']} - Quantidade vendida:{venda['quantidade']}\n")

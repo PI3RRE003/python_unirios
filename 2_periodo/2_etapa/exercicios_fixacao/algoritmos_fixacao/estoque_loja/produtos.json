@@ -1,8 +1,20 @@
 [
     {
         "codigo": "001",
-        "nome": "Caf\u00e9",
-        "preco": -522.0,
-        "quantidade": -522.0
+        "nome": "Café",
+        "preco": 18.0,
+        "estoque": 20.0
+    },
+    {
+        "codigo": "002",
+        "nome": "Açucar",
+        "preco": 6.0,
+        "estoque": 30.0
+    },
+    {
+        "codigo": "003",
+        "nome": "Sal",
+        "preco": 1.5,
+        "estoque": 30.0
     }
 ]
