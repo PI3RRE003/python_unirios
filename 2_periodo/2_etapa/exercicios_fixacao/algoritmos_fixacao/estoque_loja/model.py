@@ -89,16 +89,29 @@ def atualizar_estoque(codigo):
                 op = int(input("\nO que deseja fazer?\n1 - Adicionar\n2 - Remover\n0 - Retornar\nDigite a opção: "))
             except ValueError:
                 print("Error: Digite apenas numeros")
+                continue
 
             if op == 1:
-                qtd = float(input("Digite a quantidade que deseja adicionar ao estoque: "))
+
+                try:
+                    qtd = float(input("Digite a quantidade que deseja adicionar ao estoque: "))
+                except ValueError:
+                    print("\nError: Digite apenas numeros")
+                    continue
+
                 if qtd > 0:
                     produto['estoque'] += qtd
                     salvar_dados_produtos(produtos)
                 else:
                     print("Quantidade não pode ser menor que zero")
             elif op == 2:
-                qtd = float(input("Digite a quantidade que deseja remover do estoque: "))
+
+                try:
+                    qtd = float(input("Digite a quantidade que deseja remover do estoque: "))
+                except ValueError:
+                    print("\nError: Digite apenas numeros")
+                    continue
+
                 if qtd <= 0:
                     print("Quantidade não pode ser menor que zero")
                 elif qtd > produto['estoque']:
@@ -135,6 +148,7 @@ def registrar_venda(codigo):
                 qtd_venda = int(input("Digite a quantidade vendida: "))
             except ValueError:
                 print("Error: Digite apenas numeros")
+                continue
 
             if qtd_venda <= 0:
                 print("Error: quantidade de venda não pode ser menor ou igual a zero")
@@ -192,14 +206,27 @@ def alterar_venda_pelo_codigo(codigo):
             op = int(input("O que deseja alterar?\n1 - Preço\n2 - Quantidade\n0 - Sair\nDigite a opção:"))
 
             if op == 1:
-                print("\nVocê escolheu a opção de alterar preço")
-                novo_preco = float(input("Digite o novo preço: "))
+                print("\nVocê escolheu a opção de alterar preço\n")
+
+                try:
+                    novo_preco = float(input("Digite o novo preço: "))
+                except ValueError:
+                    print("Error: Digite apenas numeros")
+                    continue
+
                 venda['preco'] = novo_preco * venda['quantidade']
                 print(f"\nCodigo:{venda['codigo']} -  Nome:{venda['nome']} - Preço total:{venda['preco']} - Quantidade vendida:{venda['quantidade']}\n")
                 salvar_dados_vendas(vendas)
+
             elif op == 2:
-                print("\nVocê escolheu a opção de alterar estoque")
-                nova_qtd = int(input("Digite a nova quantidade: "))
+                print("\nVocê escolheu a opção de alterar estoque\n")
+
+                try:
+                    nova_qtd = int(input("Digite a nova quantidade: "))
+                except ValueError:
+                    print("Error: Digite apenas numeros")
+                    continue
+
                 venda['quantidade'] = nova_qtd
                 preco_total = venda['preco'] * nova_qtd
                 venda['preco'] = preco_total
