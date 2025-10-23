@@ -2,7 +2,13 @@
     {
         "titulo": "Harry Potter",
         "autor": "J K Rolling",
-        "ano": "1997",
+        "ano": 1997,
+        "status": "Não Finalizado"
+    },
+    {
+        "titulo": "Star-Wars",
+        "autor": "Terry Brooks",
+        "ano": 1997,
         "status": "Não Finalizado"
     }
 ]

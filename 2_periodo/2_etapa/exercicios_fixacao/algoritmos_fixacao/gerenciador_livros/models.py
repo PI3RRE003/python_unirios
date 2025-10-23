@@ -29,7 +29,11 @@ def adicionar_livro():
             return
 
         autor = input("Digite o autor: ")
-        ano_de_publicacao = input("Digite o ano de publicação: ")
+        try:
+            ano_de_publicacao = int(input("Digite o ano de publicação: "))
+        except ValueError:
+            print("Digite apenas numeros")
+            return
 
         livro = {
             'titulo' : titulo,
@@ -129,7 +133,7 @@ def marcar_como_lido():
     try:
         titulo = input("\nDigite o titulo que deseja marcar como lido: ")
         for livro in biblioteca:
-            if livro['titulo'].lower() == titulo.lower():
+            if normalizar_texto(livro['titulo']) == titulo.lower():
                 print(f"\nTitulo:{livro['titulo']}"
                   f"\nAutor:{livro['autor']}"
                   f"\nAno de Publicação:{livro['ano']}"
@@ -144,11 +148,53 @@ def marcar_como_lido():
 def buscar_livro(termo_busca):
     print("\n===== BUSCANDO LIVRO PELO TERMO =====")
     try:
-        for livro in  biblioteca:
-            if livro['titulo'].lower() == termo_busca.lower() or livro['autor'].lower() == termo_busca.lower():
+        for livro in biblioteca:
+            if normalizar_texto(livro['titulo']) == normalizar_texto(termo_busca) or normalizar_texto(livro['autor']) == termo_busca.lower():
                 print(f"\nTitulo:{livro['titulo']}"
                       f"\nAutor:{livro['autor']}"
                       f"\nAno de Publicação:{livro['ano']}"
                       f"\nStatus:{livro['status']}")
+            else:
+                print("\nLivro não existe, retornando ao menu")
+                return
     except Exception as e:
         print(f"Error:{e}")
+
+def normalizar_texto(texto):
+    return  texto.lower().replace(' ','').replace('.', '').replace('-','')
+
+def remover_livro():
+    print("\n===== REMOVENDO LIVRO PELO TERMO =====")
+    termo_busca = input("Digite o titulo do livro que deseja remover: ")
+    try:
+        for livro in biblioteca:
+            if normalizar_texto(livro['titulo']) == termo_busca.lower():
+                print(f"\nLIVRO ENCONTRADO !!!\nTitulo:{livro['titulo']}"
+                      f"\nAutor:{livro['autor']}"
+                      f"\nAno de Publicação:{livro['ano']}"
+                      f"\nStatus:{livro['status']}")
+
+                op = int(input("Deseja realmente remover?"
+                               "\n1 - Sim"
+                               "\n0 - Não"))
+
+                if op == 1:
+                    print(f"\nRemovendo: {livro['titulo']}")
+                    biblioteca.remove(livro)
+                    salvar_dados(biblioteca)
+                elif op == 2:
+                    print("\nRetornando ao menu principal...")
+                    break
+    except Exception as e:
+        print(f"Error:{e}")
+
+def listar_por_ano(ano):
+    print("===== LISTANDO POR ANO =======")
+    for livro in biblioteca:
+        if livro['ano'] == ano:
+            print(f"\nTitulo:{livro['titulo']}"
+                  f"\nAutor:{livro['autor']}"
+                  f"\nAno de Publicação:{livro['ano']}"
+                  f"\nStatus:{livro['status']}")
+        else:
+            print("Nenhum livro do ano digitado")

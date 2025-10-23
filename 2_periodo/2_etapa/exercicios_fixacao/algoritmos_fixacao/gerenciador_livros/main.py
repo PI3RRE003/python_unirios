@@ -6,6 +6,8 @@ def menu():
           "\n3 - Listar Livros Não Lidos"
           "\n4 - Marcar como lido"
           "\n5 - Buscar Livro"
+          "\n6 - Remover Livro"
+          "\n7 - Listar por ano"
           "\n0 - Sair")
 
 def main():
@@ -25,6 +27,11 @@ def main():
             elif op == 5:
                 termo_busca = input("Digite o titulo ou nome do autor: ")
                 buscar_livro(termo_busca)
+            elif op == 6:
+                remover_livro()
+            elif op == 7:
+                ano = int(input("Digite o ano que deseja listar os livros"))
+                listar_por_ano(ano)
             elif op == 0:
                 print("Encerrando o programa....")
                 break
